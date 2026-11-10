@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f0e6">
+<title>PATH — Study Journal</title>
+<style>
+:root{--paper:#f7f3ea;--card:#fffdf8;--ink:#292a26;--muted:#858477;--line:#e9e2d5;--accent:#526b58;--accent2:#dce5d8;--gold:#b28b52;--shadow:0 8px 28px #42351a12}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:28px 20px 18px;max-width:980px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.brand{font-family:Georgia,serif;font-size:30px;letter-spacing:3px}.sub{font-size:11px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+.datepill{font-size:12px;color:var(--muted);background:#fffaf1;border:1px solid var(--line);padding:9px 12px;border-radius:20px}
+main{max-width:980px;margin:auto;padding:0 16px 90px}
+.hero{background:#e8ede4;border-radius:22px;padding:22px;margin:4px 0 18px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:150px;height:150px;border:1px solid #ffffff99;border-radius:50%;right:-38px;top:-55px;box-shadow:0 0 0 18px #ffffff20,0 0 0 38px #ffffff15}
+.eyebrow{font-size:10px;letter-spacing:2px;color:#637363;text-transform:uppercase}.hero h1{font:26px Georgia,serif;margin:8px 0 5px}.hero p{font-size:13px;color:#687467;margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}.stat b{font:23px Georgia,serif;display:block}.stat span{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+nav{display:flex;gap:7px;overflow:auto;padding:4px 0 13px;scrollbar-width:none}nav button{white-space:nowrap;border:1px solid var(--line);background:#fffaf2;color:#6d6a5e;border-radius:22px;padding:10px 14px;font-size:12px}nav button.active{background:var(--accent);color:white;border-color:var(--accent)}
+.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:0 0 13px;box-shadow:var(--shadow)}
+.card h2{font:20px Georgia,serif;margin:0 0 14px}.muted{color:var(--muted);font-size:12px}
+label{display:block;font-size:11px;color:#777568;margin:12px 0 6px;letter-spacing:.4px}
+input,textarea,select{width:100%;border:1px solid var(--line);border-radius:11px;background:#fffefa;padding:12px;color:var(--ink);font:14px inherit;outline:none}
+textarea{min-height:85px;resize:vertical;line-height:1.5}input:focus,textarea:focus,select:focus{border-color:#8c9d89}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.subjects{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.subject{background:#f7f4ed;border-radius:12px;padding:10px}.subject label{margin:0 0 6px}.subject input{padding:9px}
+button.primary{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-size:13px;margin-top:13px}button.secondary{background:#f2eee5;color:#57574e;border:1px solid var(--line);border-radius:11px;padding:10px 13px;font-size:12px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;align-items:center;gap:9px;background:#f8f5ee;border-radius:11px;padding:11px;font-size:13px}.check input{width:auto;accent-color:var(--accent)}
+.item{border-top:1px solid var(--line);padding:12px 0;display:flex;justify-content:space-between;gap:12px;font-size:13px}.item:first-child{border-top:0}.item small{display:block;color:var(--muted);margin-top:4px}.item button{align-self:center}
+.bar{height:9px;background:#eee9df;border-radius:10px;overflow:hidden;margin:7px 0 13px}.bar i{display:block;height:100%;background:#7d927d;border-radius:10px}
+.empty{padding:20px;text-align:center;color:var(--muted);font-size:13px}
+footer{text-align:center;color:#aaa493;font:12px Georgia,serif;padding:20px}
+@media(min-width:700px){.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.stats{gap:14px}.hero{padding:28px}.hero h1{font-size:32px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">PATH</div><div class="sub">YOUR PERSONAL STUDY JOURNAL</div></div><div class="datepill" id="today"></div></header>
+<main>
+<section class="hero"><div class="eyebrow">A little progress, every day</div><h1>Make today count.</h1><p>Plan with intention. Learn from mistakes. Keep moving forward.</p></section>
+<section class="stats"><div class="stat"><b id="totalHours">0h</b><span>Study today</span></div><div class="stat"><b id="taskCount">0/0</b><span>Tasks done</span></div><div class="stat"><b id="streak">0</b><span>Habits checked</span></div></section>
+<nav id="tabs">
+<button class="active" data-tab="daily">Daily journal</button><button data-tab="progress">Progress</button><button data-tab="habits">Habits</button><button data-tab="errors">Error notebook</button><button data-tab="doubts">Doubt manager</button>
+</nav>
+<section class="panel active" id="daily">
+<div class="layout">
+<div class="card"><h2>Today's study log</h2><label for="entryDate">Journal date</label><input id="entryDate" type="date">
+<label>Study hours by subject</label><div class="subjects"><div class="subject"><label>Physics</label><input id="physics" type="number" min="0" max="24" step=".25" placeholder="0"></div><div class="subject"><label>Chemistry</label><input id="chemistry" type="number" min="0" max="24" step=".25" placeholder="0"></div><div class="subject"><label>Maths</label><input id="maths" type="number" min="0" max="24" step=".25" placeholder="0"></div></div>
+<label for="tasks">Today's tasks (one per line)</label><textarea id="tasks" placeholder="Complete NLM DPP&#10;Revise chemical bonding notes&#10;Solve 20 maths questions"></textarea>
+<label for="reflection">Notes & reflection</label><textarea id="reflection" placeholder="What went well? What should improve tomorrow?"></textarea>
+<button class="primary" id="saveDay">Save journal entry</button>
+</div>
+<div class="card"><h2>Daily focus</h2><p class="muted">A quick reminder of what matters today.</p><label for="priority">Most important task</label><input id="priority" placeholder="Your number-one priority">
+<label for="energy">How was your focus?</label><select id="energy"><option value="">Choose one</option><option>Excellent</option><option>Good</option><option>Average</option><option>Distracted</option></select>
+<label for="tomorrow">Tomorrow's first step</label><textarea id="tomorrow" placeholder="Make it easy to begin..."></textarea>
+<button class="secondary" id="exportData">Export backup (JSON)</button>
+<p class="muted">Entries are saved on this device in this browser. Export a backup regularly.</p>
+</div></div>
+<div class="card"><h2>Recent journal entries</h2><div id="recentEntries" class="empty">Your saved entries will appear here.</div></div>
+</section>
+<section class="panel" id="progress"><div class="card"><h2>Monthly overview</h2><label for="monthPick">Choose month</label><input id="monthPick" type="month"><div id="monthStats" class="muted" style="margin:14px 0">No entries yet.</div><div id="chart"></div></div></section>
+<section class="panel" id="habits"><div class="card"><h2>Daily habits</h2><p class="muted">Tick the habits you completed today.</p><div id="habitList" class="checks"></div><label for="newHabit">Add a habit</label><div class="row"><input id="newHabit" placeholder="e.g. Read NCERT"><button class="secondary" id="addHabit">Add habit</button></div><button class="primary" id="saveHabits">Save today's habits</button></div></section>
+<section class="panel" id="errors"><div class="card"><h2>Error notebook</h2><label for="errorSubject">Subject</label><select id="errorSubject"><option>Physics</option><option>Chemistry</option><option>Maths</option></select><label for="errorTopic">Chapter / topic</label><input id="errorTopic" placeholder="e.g. Work, Energy & Power"><label for="errorText">What mistake did you make?</label><textarea id="errorText" placeholder="Write the question idea and where your reasoning went wrong..."></textarea><label for="errorFix">Correct idea / lesson</label><textarea id="errorFix" placeholder="What will you remember next time?"></textarea><button class="primary" id="addError">Save mistake</button><div id="errorList"></div></div></section>
+<section class="panel" id="doubts"><div class="card"><h2>Doubt manager</h2><label for="doubtSubject">Subject</label><select id="doubtSubject"><option>Physics</option><option>Chemistry</option><option>Maths</option></select><label for="doubtTopic">Chapter / topic</label><input id="doubtTopic" placeholder="Chapter or question number"><label for="doubtText">Your doubt</label><textarea id="doubtText" placeholder="Write what you don't understand..."></textarea><button class="primary" id="addDoubt">Save doubt</button><div id="doubtList"></div></div></section>
+<footer>PATH · small steps, strong foundations</footer>
+</main>
+<script>
+const KEY='path_journal_v1';
+const defaults={entries:{},habits:['Study session','Revise yesterday','Solve practice questions','Sleep on time'],habitDays:{},errors:[],doubts:[]};
+let data;try{data={...defaults,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){data={...defaults}}
+const $=id=>document.getElementById(id);
+const today=new Date().toLocaleDateString('en-CA');
+$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+$('entryDate').value=today;$('monthPick').value=today.slice(0,7);
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));refresh()}
+function getDay(){return data.entries[$('entryDate').value]||{}}
+function loadDay(){let d=getDay();['physics','chemistry','maths','tasks','reflection','priority','energy','tomorrow'].forEach(k=>$(k).value=d[k]??'')}
+function saveDay(){let d={};['physics','chemistry','maths','tasks','reflection','priority','energy','tomorrow'].forEach(k=>d[k]=$(k).value);data.entries[$('entryDate').value]=d;persist();alert('Journal entry saved.')}
+$('entryDate').addEventListener('change',loadDay);$('saveDay').onclick=saveDay;
+$('tabs').addEventListener('click',e=>{let b=e.target.closest('button[data-tab]');if(!b)return;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));if(b.dataset.tab==='progress')drawProgress();if(b.dataset.tab==='habits')drawHabits();if(b.dataset.tab==='errors')drawErrors();if(b.dataset.tab==='doubts')drawDoubts()});
+function refresh(){let d=getDay(),h=['physics','chemistry','maths'].reduce((s,k)=>s+(Number(d[k])||0),0);$('totalHours').textContent=h+'h';let tasks=(d.tasks||'').split('\n').filter(x=>x.trim());$('taskCount').textContent='0/'+tasks.length;$('streak').textContent=(data.habitDays[$('entryDate').value]||[]).length;drawRecent()}
+function drawRecent(){let a=Object.entries(data.entries).sort((x,y)=>y[0].localeCompare(x[0])).slice(0,5);$('recentEntries').innerHTML=a.length?a.map(([date,d])=>`<div class="item"><div><b>${date}</b><small>${(d.tasks||'').split('\n').filter(Boolean).length} tasks · ${(+d.physics||0)+(+d.chemistry||0)+(+d.maths||0)} study hours</small></div><button class="secondary" data-date="${date}">Open</button></div>`).join(''):'No entries yet.';$('recentEntries').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('entryDate').value=b.dataset.date;loadDay();window.scrollTo({top:0,behavior:'smooth'})})}
+function drawProgress(){let month=$('monthPick').value||today.slice(0,7),arr=Object.entries(data.entries).filter(([d])=>d.startsWith(month));let total=0,days=0;arr.forEach(([d,x])=>{let h=(+x.physics||0)+(+x.chemistry||0)+(+x.maths||0);total+=h;if(h>0)days++});$('monthStats').textContent=`${days} study days · ${total.toFixed(1)} total hours · ${(days?total/days:0).toFixed(1)} hours per study day`;let labels=['Physics','Chemistry','Maths'],keys=['physics','chemistry','maths'],sums=keys.map(k=>arr.reduce((s,[d,x])=>s+(+x[k]||0),0)),max=Math.max(1,...sums);$('chart').innerHTML=labels.map((n,i)=>`<div style="font-size:12px">${n} · ${sums[i].toFixed(1)}h</div><div class="bar"><i style="width:${sums[i]/max*100}%"></i></div>`).join('')}
+$('monthPick').onchange=drawProgress;
+function drawHabits(){let done=data.habitDays[$('entryDate').value]||[];$('habitList').innerHTML=data.habits.map((h,i)=>`<label class="check"><input type="checkbox" data-habit="${i}" ${done.includes(h)?'checked':''}>${h}</label>`).join('')}
+$('addHabit').onclick=()=>{let v=$('newHabit').value.trim();if(v&&!data.habits.includes(v)){data.habits.push(v);$('newHabit').value='';drawHabits()}};
+$('saveHabits').onclick=()=>{data.habitDays[$('entryDate').value]=[...document.querySelectorAll('[data-habit]:checked')].map(x=>data.habits[+x.dataset.habit]);persist();alert('Habits saved.')};
+$('addError').onclick=()=>{let topic=$('errorTopic').value.trim(),text=$('errorText').value.trim();if(!text){alert('Write the mistake first.');return}data.errors.unshift({subject:$('errorSubject').value,topic,text,fix:$('errorFix').value,date:today});$('errorTopic').value=$('errorText').value=$('errorFix').value='';persist()};
+function drawErrors(){$('errorList').innerHTML=data.errors.length?data.errors.map((x,i)=>`<div class="item"><div><b>${x.subject} · ${x.topic||'Untitled'}</b><small>${x.date} — ${x.text}</small><small>Lesson: ${x.fix||'Not added yet'}</small></div><button class="secondary" data-del-error="${i}">Delete</button></div>`).join(''):'<div class="empty">No mistakes recorded yet.</div>';$('errorList').querySelectorAll('[data-del-error]').forEach(b=>b.onclick=()=>{data.errors.splice(+b.dataset.delError,1);persist()})}
+$('addDoubt').onclick=()=>{let text=$('doubtText').value.trim();if(!text){alert('Write your doubt first.');return}data.doubts.unshift({subject:$('doubtSubject').value,topic:$('doubtTopic').value,text,date:today,done:false});$('doubtTopic').value=$('doubtText').value='';persist()};
+function drawDoubts(){$('doubtList').innerHTML=data.doubts.length?data.doubts.map((x,i)=>`<div class="item"><div><b>${x.subject} · ${x.topic||'Doubt'}</b><small>${x.date} · ${x.text}</small><small>Status: ${x.done?'Resolved':'Pending'}</small><button class="secondary" data-resolve="${i}">${x.done?'Reopen':'Mark resolved'}</button></div><button class="secondary" data-del-doubt="${i}">Delete</button></div>`).join(''):'<div class="empty">No doubts yet.</div>';$('doubtList').querySelectorAll('[data-resolve]').forEach(b=>b.onclick=()=>{data.doubts[+b.dataset.resolve].done=!data.doubts[+b.dataset.resolve].done;persist()});$('doubtList').querySelectorAll('[data-del-doubt]').forEach(b=>b.onclick=()=>{data.doubts.splice(+b.dataset.delDoubt,1);persist()})}
+$('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='PATH-backup-'+today+'.json';a.click();URL.revokeObjectURL(url)};
+loadDay();refresh();drawHabits();drawErrors();drawDoubts();
+</script>
+</body>
+</html>
